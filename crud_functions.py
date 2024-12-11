@@ -1,7 +1,7 @@
 import sqlite3
 import random
 
-connection = sqlite3.connect(".venv/database_module14.db")
+connection = sqlite3.connect("database_module14.db")
 cursor = connection.cursor()
 
 def initiate_db():

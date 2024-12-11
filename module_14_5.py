@@ -120,7 +120,7 @@ async def set_username(message, state):
     if is_included(data['username']):
         await state.update_data(username=message.text)
         await message.answer('Введите свой email:')
-        await RegistrationState.username.set()
+        await RegistrationState.email.set()
     else:
         await message.answer("Пользователь существует, введите другое имя")
         await RegistrationState.username.set()
@@ -134,8 +134,8 @@ async def set_email(message, state):
 @dp.message_handler(state=RegistrationState.age)
 async def set_age(message, state):
     await state.update_data(username=message.text)
-    data1 = await state.get_data(['username', 'users_email', 'users_age'])
-    add_user(data1['username'], data1['users_email'], int(data1['users_age']))
+    data1 = await state.get_data(['username', 'email', 'age'])
+    add_user(data1['username'], data1['email'], int(data1['age']))
     connection.commit()
     await message.answer('Регистрация прошла успешно!')
     await state.finish()
