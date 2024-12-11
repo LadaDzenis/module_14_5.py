@@ -5,7 +5,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from crud_functions import *
 
-api = '7722693863:AAF_32Cgx5b8T88Z7abLJhFBUzVrOL8abLo'
+api = ''
 bot = Bot(token = api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -127,16 +127,15 @@ async def set_username(message, state):
 
 @dp.message_handler(state=RegistrationState.email)
 async def set_email(message, state):
-    await state.update_data(username=message.text)
+    await state.update_data(email=message.text)
     await message.answer('Введите свой возраст:')
     await RegistrationState.age.set()
 
 @dp.message_handler(state=RegistrationState.age)
 async def set_age(message, state):
-    await state.update_data(username=message.text)
-    data1 = await state.get_data(['username', 'email', 'age'])
+    await state.update_data(age=message.text)
+    data1 = await state.get_data()
     add_user(data1['username'], data1['email'], int(data1['age']))
-    connection.commit()
     await message.answer('Регистрация прошла успешно!')
     await state.finish()
 
